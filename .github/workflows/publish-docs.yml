@@ -1,0 +1,27 @@
+name: Publish Documents
+
+on:
+  push:
+    branches: ["master"]
+
+permissions:
+  contents: write
+
+jobs:
+  publish-docs:
+    name: Publish Documents
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+      - name: Install Sphinx Dependencies
+        run: pip install sphinx sphinx_rtd_theme recommonmark sphinx-autobuild myst-parser
+      - name: Generate HTML Files
+        run: sphinx-build -b html docs/source/ docs/build/html
+      - name: Deploy HTML Files
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          publish_branch: github-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/build/html
+          force_orphan: true

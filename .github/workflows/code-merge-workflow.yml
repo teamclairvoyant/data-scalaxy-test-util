@@ -1,0 +1,53 @@
+name: Code Merge Workflow
+
+on:
+  push:
+    branches: ["staging"]
+  pull_request:
+    branches: ["staging", "master"]
+
+permissions:
+  contents: read
+
+jobs:
+  check-code-formatting:
+    name: Check Code Formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: 'sbt'
+      - name: Scalafmt Check
+        run: sbt scalafmtCheckAll
+  run-unit-tests:
+    name: Run Unit Tests
+    needs: check-code-formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: 'sbt'
+      - name: Run Unit Tests
+        run: sbt test
+  run-integration-tests:
+    name: Run Integration Tests
+    needs: check-code-formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: 'sbt'
+      - name: Run Integration Tests
+        run: sbt IntegrationTest/test
