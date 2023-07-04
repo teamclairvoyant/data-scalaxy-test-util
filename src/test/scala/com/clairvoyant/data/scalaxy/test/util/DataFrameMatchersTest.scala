@@ -2,13 +2,13 @@ package com.clairvoyant.data.scalaxy.test.util
 
 import org.scalatest.exceptions.TestFailedException
 
-class DataFrameMatchersTest extends DataScalaxySpec {
+class DataFrameMatchersTest extends DataScalaxyTestUtil {
 
   "matchExpectedDataFrame() - with 2 exact dataframes" should "compare two dataframes correctly" in {
     val df1 = readJSON(
       """{
-        |   "col_A": "val_A",
-        |   "col_B": "val_B"
+        |  "col_A": "val_A",
+        |  "col_B": "val_B"
         |}""".stripMargin
     )
 
@@ -20,15 +20,15 @@ class DataFrameMatchersTest extends DataScalaxySpec {
   "matchExpectedDataFrame() - with 2 dataframes having different columns" should "fail dataframes comparison" in {
     val df1 = readJSON(
       """{
-        |   "col_A": "val_A",
-        |   "col_B": "val_B"
+        |  "col_A": "val_A",
+        |  "col_B": "val_B"
         |}""".stripMargin
     )
 
     val df2 = readJSON(
       """{
-        |   "col_A": "val_A",
-        |   "col_C": "val_B"
+        |  "col_A": "val_A",
+        |  "col_C": "val_B"
         |}""".stripMargin
     )
 
@@ -50,8 +50,8 @@ class DataFrameMatchersTest extends DataScalaxySpec {
   "matchExpectedDataFrame() - with 2 dataframes having different sizes" should "fail dataframes comparison" in {
     val df1 = readJSON(
       """{
-        |   "col_A": "val_A",
-        |   "col_B": "val_B"
+        |  "col_A": "val_A",
+        |  "col_B": "val_B"
         |}""".stripMargin
     )
 
@@ -82,15 +82,15 @@ class DataFrameMatchersTest extends DataScalaxySpec {
   "matchExpectedDataFrame() - with 2 dataframes having different schemas" should "fail dataframes comparison" in {
     val df1 = readJSON(
       """{
-        |   "col_A": "val_A",
-        |   "col_B": "val_B"
+        |  "col_A": "val_A",
+        |  "col_B": "val_B"
         |}""".stripMargin
     )
 
     val df2 = readJSON(
       """{
-        |   "col_A": "val_A",
-        |   "col_B": 1
+        |  "col_A": "val_A",
+        |  "col_B": 1
         |}""".stripMargin
     )
 
@@ -115,15 +115,15 @@ class DataFrameMatchersTest extends DataScalaxySpec {
   "matchExpectedDataFrame() - with 2 dataframes having different records" should "fail dataframes comparison" in {
     val df1 = readJSON(
       """{
-        |   "col_A": "val_A",
-        |   "col_B": "val_B"
+        |  "col_A": "val_A",
+        |  "col_B": "val_B"
         |}""".stripMargin
     )
 
     val df2 = readJSON(
       """{
-        |   "col_A": "val_C",
-        |   "col_B": "val_D"
+        |  "col_A": "val_C",
+        |  "col_B": "val_D"
         |}""".stripMargin
     )
 
