@@ -1,4 +1,4 @@
-project = '<repo_name>'
+project = 'data-scalaxy-test-util'
 release = '1.0.0'
 
 extensions = ['myst_parser']
@@ -34,6 +34,7 @@ html_sidebars = {
 highlight_language = 'scala'
 
 from recommonmark.transform import AutoStructify
+
 
 def setup(app):
     app.add_config_value('recommonmark_config', {

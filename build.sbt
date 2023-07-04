@@ -5,44 +5,49 @@ lazy val scalacOptions = Seq("-Xmax-inlines", "50")
 // ----- VARIABLES ----- //
 
 val organizationName = "com.clairvoyant"
-val projectName = "<repo_name>"
+val projectName = "data-scalaxy-test-util"
 val releaseVersion = "1.0.0"
 
+val catsVersion = "2.9.0"
 val scalaTestVersion = "3.2.15"
 val scalaXmlVersion = "2.1.0"
-val scalaParserCombinatorsVersion = "2.2.0"
+val sparkVersion = "3.4.1"
 
 // ----- TOOL DEPENDENCIES ----- //
+
+val catsDependencies = Seq("org.typelevel" %% "cats-core" % catsVersion)
 
 val scalaTestDependencies = Seq("org.scalatest" %% "scalatest" % scalaTestVersion)
 
 val scalaXmlDependencies = Seq("org.scala-lang.modules" %% "scala-xml" % scalaXmlVersion)
 
-val scalaParserCombinatorsDependencies = Seq(
-  "org.scala-lang.modules" %% "scala-parser-combinators" % scalaParserCombinatorsVersion
+val sparkDependencies = Seq(
+  "org.apache.spark" %% "spark-core" % sparkVersion,
+  "org.apache.spark" %% "spark-sql" % sparkVersion
 )
+  .map(_ excludeAll ("org.scala-lang.modules", "scala-xml"))
+  .map(_.cross(CrossVersion.for3Use2_13))
 
 // ----- MODULE DEPENDENCIES ----- //
 
 val rootDependencies =
-  scalaTestDependencies.map(_ % "it,test") ++
+  catsDependencies ++
+    scalaTestDependencies ++
     scalaXmlDependencies ++
-    scalaParserCombinatorsDependencies
+    sparkDependencies
 
 // ----- SETTINGS ----- //
 
-val rootSettings =
-  Seq(
-    organization := organizationName,
-    version := releaseVersion,
-    Keys.scalacOptions ++= scalacOptions,
-    libraryDependencies ++= rootDependencies
-  ) ++ Defaults.itSettings
+val rootSettings = Seq(
+  organization := organizationName,
+  version := releaseVersion,
+  Keys.scalacOptions ++= scalacOptions,
+  libraryDependencies ++= rootDependencies
+)
 
 // ----- PROJECTS ----- //
 
-lazy val root = (project in file("."))
-  .configs(IntegrationTest)
+lazy val `data-scalaxy-test-util` = (project in file("."))
   .settings(rootSettings)
 
 // ----- PUBLISH TO GITHUB PACKAGES ----- //
