@@ -19,7 +19,7 @@ credentials += Credentials(
   System.getenv("GITHUB_TOKEN")
 )
 
-libraryDependencies += "com.clairvoyant" %% "data-scalaxy-test-util" % "1.0.0"
+libraryDependencies += "com.clairvoyant" %% "data-scalaxy-test-util" % "1.0.0 % Test"
 ```
 
 Make sure you add `GITHUB_USERNAME` and `GITHUB_TOKEN` to the environment variables.
