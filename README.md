@@ -10,19 +10,21 @@ To use `data-scalaxy-test-util` in an existing SBT project with Scala 2.12 or a 
 add the following dependency to your `build.sbt`
 
 ```sbt
-resolvers += "Github Repo" at "https://maven.pkg.github.com/teamclairvoyant/data-scalaxy-test-util/"
+ThisBuild / resolvers += "Github Repo" at "https://maven.pkg.github.com/teamclairvoyant/data-scalaxy-test-util/"
 
-credentials += Credentials(
+ThisBuild / credentials += Credentials(
   "GitHub Package Registry",
   "maven.pkg.github.com",
-  "<github_user_name>",
-  "<github_token>"
+  System.getenv("GITHUB_USERNAME"),
+  System.getenv("GITHUB_TOKEN")
 )
 
-libraryDependencies += "com.clairvoyant" %% "data-scalaxy-test-util" % "1.0.0"
+ThisBuild / libraryDependencies += "com.clairvoyant" %% "data-scalaxy-test-util" % "1.0.0 % Test"
 ```
 
-`<github_token>` is the Personal Access Token with the permission to read packages.
+Make sure you add `GITHUB_USERNAME` and `GITHUB_TOKEN` to the environment variables.
+
+`GITHUB_TOKEN` is the Personal Access Token with the permission to read packages.
 
 ## Features:
 
