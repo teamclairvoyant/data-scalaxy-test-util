@@ -1,6 +1,6 @@
 # data-scalaxy-test-util
 
-This library provides additional APIs to support testing frameworks for `Data Scalaxy` projects.
+This library provides additional APIs to support testing frameworks for spark scala projects.
 
 ## Getting Started
 
@@ -10,7 +10,7 @@ To use `data-scalaxy-test-util` in an existing SBT project with Scala 2.12 or a 
 add the following dependency to your `build.sbt`
 
 ```sbt
-resolvers += "Restonomer Github Repo" at "https://maven.pkg.github.com/teamclairvoyant/data-scalaxy-test-util/"
+resolvers += "Github Repo" at "https://maven.pkg.github.com/teamclairvoyant/data-scalaxy-test-util/"
 
 credentials += Credentials(
   "GitHub Package Registry",
