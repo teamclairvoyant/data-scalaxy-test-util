@@ -1,12 +1,19 @@
 ThisBuild / scalaVersion := "3.3.0"
 
-lazy val scalacOptions = Seq("-Xmax-inlines", "50")
+ThisBuild / organization := "com.clairvoyant.data.scalaxy"
 
-// ----- VARIABLES ----- //
+ThisBuild / version := "1.0.0"
 
-val organizationName = "com.clairvoyant"
-val projectName = "data-scalaxy-test-util"
-val releaseVersion = "1.0.0"
+ThisBuild / credentials += Credentials(
+  "GitHub Package Registry",
+  "maven.pkg.github.com",
+  System.getenv("GITHUB_USERNAME"),
+  System.getenv("GITHUB_TOKEN")
+)
+
+ThisBuild / publishTo := Some("Github Repo" at "https://maven.pkg.github.com/teamclairvoyant/data-scalaxy-test-util/")
+
+// ----- TOOL VERSIONS ----- //
 
 val catsVersion = "2.9.0"
 val scalaTestVersion = "3.2.15"
@@ -39,24 +46,11 @@ val rootDependencies =
 // ----- SETTINGS ----- //
 
 val rootSettings = Seq(
-  organization := organizationName,
-  version := releaseVersion,
-  Keys.scalacOptions ++= scalacOptions,
+  scalacOptions ++= Seq("-Xmax-inlines", "50"),
   libraryDependencies ++= rootDependencies
 )
 
 // ----- PROJECTS ----- //
 
-lazy val `data-scalaxy-test-util` = (project in file("."))
+lazy val `test-util` = (project in file("."))
   .settings(rootSettings)
-
-// ----- PUBLISH TO GITHUB PACKAGES ----- //
-
-ThisBuild / publishTo := Some("Github Repo" at s"https://maven.pkg.github.com/teamclairvoyant/$projectName/")
-
-ThisBuild / credentials += Credentials(
-  "GitHub Package Registry",
-  "maven.pkg.github.com",
-  "teamclairvoyant",
-  System.getenv("GITHUB_TOKEN")
-)

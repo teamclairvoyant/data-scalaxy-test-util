@@ -22,4 +22,5 @@ jobs:
       - name: Publish Jars
         run: sbt publish
         env:
+          GITHUB_USERNAME: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
