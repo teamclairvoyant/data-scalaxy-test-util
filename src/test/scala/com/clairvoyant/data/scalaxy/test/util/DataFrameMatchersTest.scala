@@ -5,7 +5,7 @@ import org.scalatest.exceptions.TestFailedException
 class DataFrameMatchersTest extends DataScalaxyTestUtil {
 
   "matchExpectedDataFrame() - with 2 exact dataframes" should "compare two dataframes correctly" in {
-    val df1 = readJSON(
+    val df1 = readJSONFromText(
       """{
         |  "col_A": "val_A",
         |  "col_B": "val_B"
@@ -18,14 +18,14 @@ class DataFrameMatchersTest extends DataScalaxyTestUtil {
   }
 
   "matchExpectedDataFrame() - with 2 dataframes having different columns" should "fail dataframes comparison" in {
-    val df1 = readJSON(
+    val df1 = readJSONFromText(
       """{
         |  "col_A": "val_A",
         |  "col_B": "val_B"
         |}""".stripMargin
     )
 
-    val df2 = readJSON(
+    val df2 = readJSONFromText(
       """{
         |  "col_A": "val_A",
         |  "col_C": "val_B"
@@ -48,14 +48,14 @@ class DataFrameMatchersTest extends DataScalaxyTestUtil {
   }
 
   "matchExpectedDataFrame() - with 2 dataframes having different sizes" should "fail dataframes comparison" in {
-    val df1 = readJSON(
+    val df1 = readJSONFromText(
       """{
         |  "col_A": "val_A",
         |  "col_B": "val_B"
         |}""".stripMargin
     )
 
-    val df2 = readJSON(
+    val df2 = readJSONFromText(
       """[
         | {
         |   "col_A": "val_A1",
@@ -80,14 +80,14 @@ class DataFrameMatchersTest extends DataScalaxyTestUtil {
   }
 
   "matchExpectedDataFrame() - with 2 dataframes having different schemas" should "fail dataframes comparison" in {
-    val df1 = readJSON(
+    val df1 = readJSONFromText(
       """{
         |  "col_A": "val_A",
         |  "col_B": "val_B"
         |}""".stripMargin
     )
 
-    val df2 = readJSON(
+    val df2 = readJSONFromText(
       """{
         |  "col_A": "val_A",
         |  "col_B": 1
@@ -113,14 +113,14 @@ class DataFrameMatchersTest extends DataScalaxyTestUtil {
   }
 
   "matchExpectedDataFrame() - with 2 dataframes having different records" should "fail dataframes comparison" in {
-    val df1 = readJSON(
+    val df1 = readJSONFromText(
       """{
         |  "col_A": "val_A",
         |  "col_B": "val_B"
         |}""".stripMargin
     )
 
-    val df2 = readJSON(
+    val df2 = readJSONFromText(
       """{
         |  "col_A": "val_C",
         |  "col_B": "val_D"
