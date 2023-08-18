@@ -14,14 +14,23 @@ trait DataScalaxyTestUtil extends AnyFlatSpec with Matchers with DataFrameMatche
 
   import sparkSession.implicits.*
 
-  def readJSON(text: String): DataFrame =
+  def readJSONFromText(text: String, jsonOptions: Map[String, String] = Map.empty): DataFrame =
     sparkSession.read
-      .option("multiline", value = true)
-      .option("inferSchema", value = true)
+      .option("multiline", true)
+      .option("inferSchema", true)
+      .options(jsonOptions)
       .json(Seq(text).toDS())
+
+  def readJSONFromFile(path: String, jsonOptions: Map[String, String] = Map.empty): DataFrame =
+    sparkSession.read
+      .option("multiline", true)
+      .option("inferSchema", true)
+      .options(jsonOptions)
+      .json(path)
 
   def readCSVFromText(text: String, csvOptions: Map[String, String] = Map.empty): DataFrame =
     sparkSession.read
+      .option("header", true)
       .options(csvOptions)
       .csv {
         Seq(text)
@@ -31,6 +40,7 @@ trait DataScalaxyTestUtil extends AnyFlatSpec with Matchers with DataFrameMatche
 
   def readCSVFromFile(path: String, csvOptions: Map[String, String] = Map.empty): DataFrame =
     sparkSession.read
+      .option("header", true)
       .options(csvOptions)
       .csv(path)
 
