@@ -11,7 +11,26 @@ ThisBuild / credentials += Credentials(
   System.getenv("GITHUB_TOKEN")
 )
 
+// ----- PUBLISH TO GITHUB PACKAGES ----- //
+
 ThisBuild / publishTo := Some("Github Repo" at "https://maven.pkg.github.com/teamclairvoyant/data-scalaxy-test-util/")
+
+// ----- SCALAFIX ----- //
+
+ThisBuild / semanticdbEnabled := true
+ThisBuild / scalafixOnCompile := true
+
+// ----- WARTREMOVER ----- //
+
+ThisBuild / wartremoverErrors ++= Warts.allBut(
+  Wart.Any,
+  Wart.DefaultArguments,
+  Wart.Equals,
+  Wart.IterableOps,
+  Wart.Nothing,
+  Wart.SizeIs,
+  Wart.Throw
+)
 
 // ----- TOOL VERSIONS ----- //
 
