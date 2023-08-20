@@ -147,4 +147,19 @@ trait DataScalaxyTestUtil extends AnyFlatSpec with Matchers with DataFrameMatche
       .format("xml")
       .load(path)
 
+  /**
+   * Reads Parquet file and parse it to DataFrame.
+   *
+   * @param path
+   *   Path to Parquet file
+   * @param parquetOptions
+   *   Map of spark read options for Parquet format
+   * @return
+   *   DataFrame
+   */
+  def readParquet(path: String, parquetOptions: Map[String, String] = Map.empty): DataFrame =
+    sparkSession.read
+      .options(parquetOptions)
+      .parquet(path)
+
 }
