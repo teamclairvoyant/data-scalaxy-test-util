@@ -28,7 +28,7 @@ Make sure you add `GITHUB_USERNAME` and `GITHUB_TOKEN` to the environment variab
 
 ## Features:
 
-### Spark DataFrame Comparison
+### 1. Spark DataFrame Comparison
 
 This library exposes APIs that can be used to compare two spark dataframes.
 
@@ -108,3 +108,16 @@ class DataFrameMatchersTest extends DataScalaxyTestUtil {
 ```
 
 Please refer to [examples](https://github.com/teamclairvoyant/data-scalaxy-test-util/blob/master/src/test/scala/com/clairvoyant/data/scalaxy/test/util/DataFrameMatchersTest.scala) for various use cases where you can use this library to compare two dataframes.
+
+### 2. APIs to read data of several formats and parse it to spark dataframe
+
+This library provides below APIs:
+
+* readJSONFromText
+* readJSONFromFile
+* readCSVFromText
+* readCSVFromFile
+* readXMLFromText
+* readXMLFromFile
+
+You can find the documentation for each API [here](src/main/scala/com/clairvoyant/data/scalaxy/test/util/DataScalaxyTestUtil.scala).
