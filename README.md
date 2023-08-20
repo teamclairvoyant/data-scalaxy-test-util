@@ -119,5 +119,6 @@ This library provides below APIs:
 * readCSVFromFile
 * readXMLFromText
 * readXMLFromFile
+* readParquet
 
 You can find the documentation for each API [here](src/main/scala/com/clairvoyant/data/scalaxy/test/util/DataScalaxyTestUtil.scala).
