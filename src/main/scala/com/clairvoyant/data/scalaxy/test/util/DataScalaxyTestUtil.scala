@@ -17,6 +17,16 @@ trait DataScalaxyTestUtil extends AnyFlatSpec with Matchers with DataFrameMatche
 
   import sparkSession.implicits.*
 
+  /**
+   * Reads JSON text and parse it to DataFrame.
+   *
+   * @param text
+   *   JSON text to parse
+   * @param jsonOptions
+   *   Map of spark read options for JSON format
+   * @return
+   *   DataFrame
+   */
   def readJSONFromText(text: String, jsonOptions: Map[String, String] = Map.empty): DataFrame =
     sparkSession.read
       .option("multiline", true)
@@ -24,6 +34,16 @@ trait DataScalaxyTestUtil extends AnyFlatSpec with Matchers with DataFrameMatche
       .options(jsonOptions)
       .json(Seq(text).toDS())
 
+  /**
+   * Reads JSON file and parse it to DataFrame.
+   *
+   * @param path
+   *   Path to JSON file
+   * @param jsonOptions
+   *   Map of spark read options for JSON format
+   * @return
+   *   DataFrame
+   */
   def readJSONFromFile(path: String, jsonOptions: Map[String, String] = Map.empty): DataFrame =
     sparkSession.read
       .option("multiline", true)
@@ -31,6 +51,16 @@ trait DataScalaxyTestUtil extends AnyFlatSpec with Matchers with DataFrameMatche
       .options(jsonOptions)
       .json(path)
 
+  /**
+   * Reads CSV text and parse it to DataFrame.
+   *
+   * @param text
+   *   CSV text to parse
+   * @param csvOptions
+   *   Map of spark read options for CSV format
+   * @return
+   *   DataFrame
+   */
   def readCSVFromText(text: String, csvOptions: Map[String, String] = Map.empty): DataFrame =
     sparkSession.read
       .option("header", true)
@@ -41,12 +71,32 @@ trait DataScalaxyTestUtil extends AnyFlatSpec with Matchers with DataFrameMatche
           .toDS()
       }
 
+  /**
+   * Reads CSV file and parse it to DataFrame.
+   *
+   * @param path
+   *   Path to CSV file
+   * @param csvOptions
+   *   Map of spark read options for CSV format
+   * @return
+   *   DataFrame
+   */
   def readCSVFromFile(path: String, csvOptions: Map[String, String] = Map.empty): DataFrame =
     sparkSession.read
       .option("header", true)
       .options(csvOptions)
       .csv(path)
 
+  /**
+   * Reads XML text and parse it to DataFrame.
+   *
+   * @param text
+   *   XML text to parse
+   * @param xmlOptions
+   *   Map of spark read options for XML format
+   * @return
+   *   DataFrame
+   */
   def readXMLFromText(text: String, xmlOptions: Map[String, String] = Map.empty): DataFrame = {
     def saveXMLTextToTempFiles(xmlTextValue: Seq[String]) = {
       xmlTextValue.map { text =>
@@ -80,6 +130,16 @@ trait DataScalaxyTestUtil extends AnyFlatSpec with Matchers with DataFrameMatche
     xmlDataFrame
   }
 
+  /**
+   * Reads XML file and parse it to DataFrame.
+   *
+   * @param path
+   *   Path to XML file
+   * @param xmlOptions
+   *   Map of spark read options for XML format
+   * @return
+   *   DataFrame
+   */
   def readXMLFromFile(path: String, xmlOptions: Map[String, String] = Map.empty): DataFrame =
     sparkSession.read
       .option("rowTag", "row")
