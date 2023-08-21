@@ -128,7 +128,7 @@ You can find the documentation for each API [here](src/main/scala/com/clairvoyan
 
 ### 3. Mocked API for S3 Bucket
 
-The library provides API to mock S3 bucket and allows spark to read data from or write data to mocked S3 Bucket.
+This library provides API to mock S3 service of AWS and allows spark to read data from or write data to mocked S3 bucket.
 
 Below is the usage example:
 
@@ -141,17 +141,25 @@ class S3BucketReaderSpec extends DataFrameReader with DataFrameMatcher with S3Bu
 
   "read()" should "read a dataframe from the provided s3 path" in {
     val bucketName = "test-bucket"
+    val path = "data"
 
     s3Client.createBucket(bucketName)
 
-    val actualDF = readCSVFromFile(s"s3a://$bucketName/$outputDirPath")
-
-    val expectedDF = readCSVFromText(
-      """|col_A,col_B,col_C
-         |val_A1,val_B1,val_C1""".stripMargin
+    val df = readJSONFromText(
+      """|{
+         |  "col_A": "val_A1",
+         |  "col_B": "val_B1",
+         |  "col_C": "val_C1"
+         |}""".stripMargin
     )
 
-    actualDF should matchExpectedDataFrame(expectedDF)
+    // Write dataframe to mocked S3 bucket
+    df.write.json(s"s3a://$bucketName/$path")
+
+    // Read data from mocked S3 bucket
+    val actualDF = readJSONFromFile(s"s3a://$bucketName/data") 
+
+    actualDF should matchExpectedDataFrame(df)
   }
 
 }
