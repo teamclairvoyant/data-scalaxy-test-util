@@ -35,6 +35,7 @@ ThisBuild / wartremoverErrors ++= Warts.allBut(
 // ----- TOOL VERSIONS ----- //
 
 val catsVersion = "2.9.0"
+val s3MockVersion = "0.2.6"
 val scalaTestVersion = "3.2.15"
 val scalaXmlVersion = "2.1.0"
 val sparkVersion = "3.4.1"
@@ -42,6 +43,12 @@ val sparkVersion = "3.4.1"
 // ----- TOOL DEPENDENCIES ----- //
 
 val catsDependencies = Seq("org.typelevel" %% "cats-core" % catsVersion)
+
+val s3MockDependencies = Seq(
+  "io.findify" %% "s3mock" % s3MockVersion
+)
+  .map(_.cross(CrossVersion.for3Use2_13))
+  .map(_ excludeAll ("org.scala-lang.modules", "scala-xml"))
 
 val scalaTestDependencies = Seq("org.scalatest" %% "scalatest" % scalaTestVersion)
 
@@ -58,6 +65,7 @@ val sparkDependencies = Seq(
 
 val rootDependencies =
   catsDependencies ++
+    s3MockDependencies ++
     scalaTestDependencies ++
     scalaXmlDependencies ++
     sparkDependencies

@@ -1,4 +1,4 @@
-package com.clairvoyant.data.scalaxy.test.util
+package com.clairvoyant.data.scalaxy.test.util.matchers
 
 import cats.data.{Validated, ValidatedNel}
 import cats.implicits.*
@@ -9,7 +9,7 @@ import org.scalatest.matchers.{MatchResult, Matcher}
 
 import scala.jdk.CollectionConverters.ListHasAsScala
 
-trait DataFrameMatchers {
+trait DataFrameMatcher {
   self: Matchers =>
 
   private def collectSorted(dataFrame: DataFrame, columnsToSortBy: List[String]): List[Row] =

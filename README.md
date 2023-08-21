@@ -52,11 +52,12 @@ you need to use the api in the below manner:
 For the use case, where we have exactly same dataframes, the below test case will successfully pass.
 
 ```scala
-import com.clairvoyant.data.scalaxy.test.util.DataScalaxyTestUtil
+import com.clairvoyant.data.scalaxy.test.util.matchers.DataFrameMatcher
+import com.clairvoyant.data.scalaxy.test.util.readers.DataFrameReader
 
-class DataFrameMatchersTest extends DataScalaxyTestUtil {
+class DataFrameMatchersTest extends DataFrameMatcher with DataFrameReader {
   "matchExpectedDataFrame() - with 2 exact dataframes" should "compare two dataframes correctly" in {
-    val df1 = readJSON(
+    val df1 = readJSONFromText(
       """{
         |  "col_A": "val_A",
         |  "col_B": "val_B"
@@ -84,18 +85,19 @@ Missing columns col_C
 ```
 
 ```scala
-import com.clairvoyant.data.scalaxy.test.util.DataScalaxyTestUtil
+import com.clairvoyant.data.scalaxy.test.util.matchers.DataFrameMatcher
+import com.clairvoyant.data.scalaxy.test.util.readers.DataFrameReader
 
-class DataFrameMatchersTest extends DataScalaxyTestUtil {
+class DataFrameMatchersTest extends DataFrameMatcher with DataFrameReader {
   "matchExpectedDataFrame() - with 2 dataframes having different columns" should "fail dataframes comparison" in {
-    val df1 = readJSON(
+    val df1 = readJSONFromText(
       """{
         |  "col_A": "val_A",
         |  "col_B": "val_B"
         |}""".stripMargin
     )
 
-    val df2 = readJSON(
+    val df2 = readJSONFromText(
       """{
         |  "col_A": "val_A",
         |  "col_C": "val_B"
@@ -107,7 +109,7 @@ class DataFrameMatchersTest extends DataScalaxyTestUtil {
 }
 ```
 
-Please refer to [examples](https://github.com/teamclairvoyant/data-scalaxy-test-util/blob/master/src/test/scala/com/clairvoyant/data/scalaxy/test/util/DataFrameMatchersTest.scala) for various use cases where you can use this library to compare two dataframes.
+Please refer to [examples](src/test/scala/com/clairvoyant/data/scalaxy/test/util/matchers/DataFrameMatcherTest.scala) for various use cases where you can use this library to compare two dataframes.
 
 ### 2. APIs to read data of several formats and parse it to spark dataframe
 
@@ -121,4 +123,36 @@ This library provides below APIs:
 * readXMLFromFile
 * readParquet
 
-You can find the documentation for each API [here](src/main/scala/com/clairvoyant/data/scalaxy/test/util/DataScalaxyTestUtil.scala).
+You can find the documentation for each API [here](src/main/scala/com/clairvoyant/data/scalaxy/test/util/readers/DataframeReader.scala).
+
+
+### 3. Mocked API for S3 Bucket
+
+The library provides API to mock S3 bucket and allows spark to read data from or write data to mocked S3 Bucket.
+
+Below is the usage example:
+
+```scala
+import com.clairvoyant.data.scalaxy.test.util.matchers.DataFrameMatcher
+import com.clairvoyant.data.scalaxy.test.util.mock.S3BucketMock
+import com.clairvoyant.data.scalaxy.test.util.readers.DataFrameReader
+
+class S3BucketReaderSpec extends DataFrameReader with DataFrameMatcher with S3BucketMock {
+
+  "read()" should "read a dataframe from the provided s3 path" in {
+    val bucketName = "test-bucket"
+
+    s3Client.createBucket(bucketName)
+
+    val actualDF = readCSVFromFile(s"s3a://$bucketName/$outputDirPath")
+
+    val expectedDF = readCSVFromText(
+      """|col_A,col_B,col_C
+         |val_A1,val_B1,val_C1""".stripMargin
+    )
+
+    actualDF should matchExpectedDataFrame(expectedDF)
+  }
+
+}
+``````

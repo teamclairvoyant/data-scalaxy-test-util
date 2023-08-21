@@ -1,8 +1,11 @@
-package com.clairvoyant.data.scalaxy.test.util
+package com.clairvoyant.data.scalaxy.test.util.matchers
 
+import com.clairvoyant.data.scalaxy.test.util.readers.DataFrameReader
 import org.scalatest.exceptions.TestFailedException
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class DataFrameMatchersTest extends DataScalaxyTestUtil {
+class DataFrameMatcherTest extends DataFrameReader with DataFrameMatcher {
 
   "matchExpectedDataFrame() - with 2 exact dataframes" should "compare two dataframes correctly" in {
     val df1 = readJSONFromText(

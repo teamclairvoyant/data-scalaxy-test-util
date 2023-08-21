@@ -1,19 +1,12 @@
-package com.clairvoyant.data.scalaxy.test.util
+package com.clairvoyant.data.scalaxy.test.util.readers
 
-import org.apache.spark.sql.{DataFrame, SparkSession}
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should.Matchers
+import com.clairvoyant.data.scalaxy.test.util.SparkUtil
+import org.apache.spark.sql.DataFrame
 
 import java.io.{File, PrintWriter}
 import java.util.concurrent.Semaphore
 
-trait DataScalaxyTestUtil extends AnyFlatSpec with Matchers with DataFrameMatchers {
-
-  given sparkSession: SparkSession =
-    SparkSession
-      .builder()
-      .master("local[*]")
-      .getOrCreate()
+trait DataFrameReader extends SparkUtil {
 
   import sparkSession.implicits.*
 
